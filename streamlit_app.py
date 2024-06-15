@@ -15,15 +15,21 @@ ic1,ic2=input_container.columns(2)
 #       fy     t       L     d1     d2    d3   d12   d13
 # 6  436.0  1.92  2000.0  359.2  128.0  24.7  7.68  7.68
 
+# Diagram
+# Hide d12, d13
+# Units
+# Description
+# Logos (Uni and AI)
+# Get best model
 
 with ic1:
     st.subheader('Axial-capacity predictor', divider='rainbow')
 
     dynamic_label_placeholder = st.empty()
 
-    fy=st.number_input("**fy:**",min_value=0.0,max_value=1000.0,step=1.0,value=436.0)
-    t=st.number_input("**t:**",min_value=0.0,max_value=1000.0,step=1.0,value=1.92)
-    L=st.number_input("**L:**",min_value=0.0,max_value=3000.0,step=1.0,value=2000.0)
+    fy=st.number_input("**Yielding Stress (MPa):**",min_value=0.0,max_value=1000.0,step=1.0,value=436.0)
+    t=st.number_input("**t (mm):**",min_value=0.0,max_value=1000.0,step=1.0,value=1.92)
+    L=st.number_input("**Length of the column (mm):**",min_value=0.0,max_value=3000.0,step=1.0,value=2000.0)
     d1=st.number_input("**D1:**", min_value=0.0,max_value=2000.0,step=1.0,value=359.2)
     d2=st.number_input("**D2:**", min_value=0.0,max_value=1000.0,step=1.0,value=128.0)
     d3 = st.number_input("**D3:**", min_value=0.0, max_value=1000.0, step=1.0, value=24.7)
@@ -43,4 +49,19 @@ with ic1:
 
     pred = automl.model.predict(x)
 
-    dynamic_label_placeholder.write(f"**Axial-capacity for below values** = **{round(pred[0], 1)}**")
+    dynamic_label_placeholder.write(f"Axial-capacity for below values = **{round(pred[0], 1)}**")
+
+with ic2:
+    st.image(root_dir + 'CFS.png', caption='CFS Diagram', use_column_width=True)
+
+    logo_container = st.container()
+
+    # Add space above logos
+    logo_container.markdown("<br><br><br><br><br><br>", unsafe_allow_html=True)
+
+    col1, col2 = logo_container.columns([1, 3])  # Adjust the column widths for left alignment
+    with col1:
+        st.image(root_dir + 'Combined_Logo.png', width=300)  # Place logo in the first column
+    with col2:
+        st.empty()
+
